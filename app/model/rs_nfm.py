@@ -5,6 +5,10 @@ from deepctr_torch.models import NFM
 from sklearn.preprocessing import LabelEncoder
 import sqlite3
 
+# nfm_devices = [ 'cpu', 'cuda' ]
+nfm_device = 'cuda'
+if not hasattr(torch._C, '_cuda_getDeviceCount'):
+    nfm_device = 'cpu'
 con = sqlite3.connect('database/database.sqlite', check_same_thread = False)
 cur = con.cursor()
 
@@ -44,8 +48,8 @@ def rs_nfm():
 
     test_model_input = { name: test[name] for name in feature_names }
 
-    model = NFM(linear_feature_columns, dnn_feature_columns, task = 'regression', device = "cuda")
-    model.load_state_dict(torch.load("database/NFM/NFM500.h5"))
+    model = NFM(linear_feature_columns, dnn_feature_columns, task = 'regression', device = nfm_device)
+    model.load_state_dict(torch.load("database/NFM/NFM500.h5", map_location = torch.device(nfm_device)))
     model.eval()
 
     pred_ans = model.predict(test_model_input, batch_size = 256)
