@@ -26,3 +26,14 @@ def rscourse():
     else:
         result = 'Not JSON data'
         return result
+
+@app.route('/rscourse/<string:course_name>', methods = ['GET'])
+def rscoursepath(course_name):
+    assert course_name == request.view_args['course_name']
+    course_name_dict = { 'course': str(course_name) }
+    course_id = rs_nfm.get_course_id(course_name_dict)
+    rs_nfm.input_course_id(course_id)
+    rsnfm = rs_nfm.rs_nfm()
+    rrn = rs_nfm.round_rs_num(rsnfm)
+    prc = rs_nfm.print_rs_course(rrn)
+    return prc
