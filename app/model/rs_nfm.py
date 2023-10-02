@@ -19,7 +19,7 @@ def input_course_id(num: int):
     df = pd.read_sql("SELECT * FROM choose_course_num", con)
     data = pd.read_sql("SELECT * FROM ndf107sparsefeat", con)
     data = data.iloc[num:num + 1, :]
-    df = df.append(data)
+    df = pd.concat([ df, data ])
     df = df.drop_duplicates()
     df = df.reset_index(drop = True)
     df.to_sql("choose_course_num", con, if_exists = 'replace', index = False)

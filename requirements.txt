@@ -1,6 +1,6 @@
 flask
 gunicorn
 pandas
-sklearn
+scikit-learn
 deepctr_torch
 torch
