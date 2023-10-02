@@ -73,9 +73,10 @@ def print_rs_course(round_rs_num):
         ndf = str(ndf).replace("'", "")
         cl.append(ndf)
 
-    cd = {}
-    for i, j in enumerate(cl):
-        cd.update({ 'course{0}'.format(i): j })
+    cd = []
+    for _, j in enumerate(cl):
+        if j != "":
+            cd.append(j)
     return cd
 
 def all_course() -> dict:
@@ -89,9 +90,10 @@ def all_course() -> dict:
     cl = str(cl).replace("]", "")
     cl_list = cl.split()
 
-    cs = {}
-    for i, j in enumerate(cl_list):
-        cs.update({ 'course{0}'.format(i): j })
+    cs = []
+    for _, j in enumerate(cl_list):
+        if j != "":
+            cs.append(j)
     return cs
 
 if __name__ == "__main__":
